@@ -3,8 +3,9 @@ package com.alura.forum.controller;
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,18 +31,18 @@ public class TopicosController {
   private CursoRepository cursoRepository;
 
   @PostMapping
-  public ResponseEntity<TopicoResponseDto> cadastrar(@RequestBody TopicoRequestDto topicoRequestDto, UriComponentsBuilder uBuilder) {
+  public ResponseEntity<TopicoResponseDto> cadastrar(@Valid @RequestBody final TopicoRequestDto topicoRequestDto, UriComponentsBuilder uBuilder) {
     Topico topico = topicoRequestDto.converterParaTopico(cursoRepository);
     topicoRepository.save(topico);
 
     URI uri = uBuilder.path("/topicos/{id}").buildAndExpand(topico.getId()).toUri();
     TopicoResponseDto topicoResponseDto = new TopicoResponseDto(topico);
-    
+
     return ResponseEntity.created(uri).body(topicoResponseDto);
   }
   
   @GetMapping
-  public List<TopicoResponseDto> lista(String nomeCurso) {
+  public List<TopicoResponseDto> lista(final String nomeCurso) {
     if (nomeCurso == null) {
       List<Topico> topicos = topicoRepository.findAll();
       return TopicoResponseDto.converter(topicos);
