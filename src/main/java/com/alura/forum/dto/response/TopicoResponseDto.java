@@ -9,7 +9,7 @@ import com.alura.forum.model.Topico;
 import lombok.Getter;
 
 @Getter
-public class TopicoDto {
+public class TopicoResponseDto {
   
   private Long id;
   
@@ -19,15 +19,15 @@ public class TopicoDto {
 
   private LocalDateTime dataCriacao;
 
-  public TopicoDto(Topico topico) {
+  public TopicoResponseDto(Topico topico) {
     this.id = topico.getId();
     this.titulo = topico.getTitulo();
     this.mensagem = topico.getMensagem();
     this.dataCriacao = topico.getDataCriacao();
   }
 
-  public static List<TopicoDto> converter(List<Topico> topicos) {
-    return topicos.stream().map(TopicoDto::new).collect(Collectors.toList());
+  public static List<TopicoResponseDto> converter(List<Topico> topicos) {
+    return topicos.stream().map(TopicoResponseDto::new).collect(Collectors.toList());
   }
 
 }
