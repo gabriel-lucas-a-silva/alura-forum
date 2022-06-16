@@ -9,6 +9,6 @@ This is a simple API built with Spring Boot to simulate how Alura Forum may work
 * Spring Boot
 * Spring Data JPA
 * Javax Validation
-* REST Architecture Concepts 
 * Data Transfer Object - DTO
+* * REST Architecture Concepts 
 
