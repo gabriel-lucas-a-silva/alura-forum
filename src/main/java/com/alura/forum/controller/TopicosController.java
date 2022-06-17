@@ -31,7 +31,7 @@ public class TopicosController {
   private CursoRepository cursoRepository;
 
   @PostMapping
-  public ResponseEntity<TopicoResponseDto> cadastrar(@Valid @RequestBody final TopicoRequestDto topicoRequestDto, UriComponentsBuilder uBuilder) {
+  public ResponseEntity<TopicoResponseDto> cadastrar(@RequestBody @Valid final TopicoRequestDto topicoRequestDto, UriComponentsBuilder uBuilder) {
     Topico topico = topicoRequestDto.converterParaTopico(cursoRepository);
     topicoRepository.save(topico);
 
