@@ -20,7 +20,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Entity
-@Builder
+@Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
 public class Topico {

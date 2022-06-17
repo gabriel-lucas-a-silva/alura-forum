@@ -4,19 +4,23 @@ import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.alura.forum.dto.request.AtualizacaoTopicoRequestDto;
 import com.alura.forum.dto.request.TopicoRequestDto;
 import com.alura.forum.dto.response.DetalhesDoTopicoResponseDto;
 import com.alura.forum.dto.response.TopicoResponseDto;
@@ -51,11 +55,12 @@ public class TopicosController {
     DetalhesDoTopicoResponseDto detalheTopicoResponseDto = new DetalhesDoTopicoResponseDto();
 
     if (optionalTopico.isPresent()) {
-      detalheTopicoResponseDto = new DetalhesDoTopicoResponseDto(optionalTopico.get());
+      Topico safeTopico = optionalTopico.get();
+      detalheTopicoResponseDto = new DetalhesDoTopicoResponseDto(safeTopico);
       return ResponseEntity.ok(detalheTopicoResponseDto);
     }
 
-    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+    return ResponseEntity.notFound().build();
   }
   
   @GetMapping
@@ -67,6 +72,32 @@ public class TopicosController {
     
     List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
     return TopicoResponseDto.converter(topicos);
+  }
+
+  @PutMapping("/{id}")
+  @Transactional
+  public ResponseEntity<TopicoResponseDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoRequestDto atualicaoTopicoRequestDto) {
+    Optional<Topico> optionalTopico = topicoRepository.findById(id);
+
+    if (optionalTopico.isPresent()) {
+      Topico topico = atualicaoTopicoRequestDto.atualizar(id, topicoRepository);
+      TopicoResponseDto topicoResponseDto = new TopicoResponseDto(topico);
+      return ResponseEntity.ok(topicoResponseDto);
+    }
+ 
+    return ResponseEntity.notFound().build();
+  }
+
+  @DeleteMapping("/{id}")
+  public ResponseEntity<?> remover(@PathVariable Long id) {
+    Optional<Topico> optionalTopico = topicoRepository.findById(id);
+
+    if (optionalTopico.isPresent()) {
+      topicoRepository.deleteById(id);
+      return ResponseEntity.ok().build();
+    }
+
+    return ResponseEntity.notFound().build();
   }
 
 } 
