@@ -7,8 +7,10 @@ import java.util.stream.Collectors;
 import com.alura.forum.model.Topico;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class TopicoResponseDto {
   
   private Long id;
