@@ -9,9 +9,11 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -22,6 +24,9 @@ public class SecurityConfiguration {
     @Autowired
     private AutenticacaoService autenticacaoService;
 
+    @Autowired
+    private TokenService tokenService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -30,8 +35,11 @@ public class SecurityConfiguration {
                                 authz
                                         .antMatchers(HttpMethod.GET, TOPICOS_API_URL).permitAll()
                                         .antMatchers(HttpMethod.GET, TOPICOS_API_URL + "/*").permitAll()
+                                        .antMatchers(HttpMethod.POST, "/auth").permitAll()
                                         .anyRequest().authenticated()
-                                        .and().formLogin();
+                                        .and().csrf().disable()
+                                        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                                        .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
                             } catch (Exception e) {
                                 System.out.println("Authentication Exception");
                             }

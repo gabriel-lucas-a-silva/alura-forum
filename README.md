@@ -13,3 +13,7 @@ This is a simple API built with Spring Boot to simulate how Alura Forum may work
 - Controller Advice
 - Data Transfer Object - DTO
 - REST Architecture Concepts
+- Pagination
+- Spring Cache
+- Spring Security
+- JWT Authentication
