@@ -54,7 +54,7 @@ public class TopicosController {
 
     return ResponseEntity.created(uri).body(topicoResponseDto);
   }
-  
+
   @GetMapping("/{id}")
   public ResponseEntity<DetalhesDoTopicoResponseDto> detalhar(@PathVariable final Long id) {
     Optional<Topico> optionalTopico = topicoRepository.findById(id);
@@ -68,17 +68,17 @@ public class TopicosController {
 
     return ResponseEntity.notFound().build();
   }
-  
+
   @GetMapping
   @Cacheable(value = "listaDeTopicos")
-  public Page<TopicoResponseDto> listar(@RequestParam(required = false) final String nomeCurso, 
+  public Page<TopicoResponseDto> listar(@RequestParam(required = false) final String nomeCurso,
   @PageableDefault(page = 0, size = 10, sort = "id", direction = Direction.DESC) final Pageable paginacao) {
     // Pageable paginacao = PageRequest.of(pagina, qtdElementos, Direction.ASC, ordenacao);
     if (nomeCurso == null) {
       Page<Topico> topicos = topicoRepository.findAll(paginacao);
       return TopicoResponseDto.converter(topicos);
     }
-    
+
     Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, paginacao);
     return TopicoResponseDto.converter(topicos);
   }
@@ -94,7 +94,7 @@ public class TopicosController {
       TopicoResponseDto topicoResponseDto = new TopicoResponseDto(topico);
       return ResponseEntity.ok(topicoResponseDto);
     }
- 
+
     return ResponseEntity.notFound().build();
   }
 
