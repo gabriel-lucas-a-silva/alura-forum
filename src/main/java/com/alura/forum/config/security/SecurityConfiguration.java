@@ -1,5 +1,6 @@
 package com.alura.forum.config.security;
 
+import com.alura.forum.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,9 @@ public class SecurityConfiguration {
     @Autowired
     private TokenService tokenService;
 
+    @Autowired
+    private UsuarioRepository usuarioRepository;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
@@ -39,7 +43,7 @@ public class SecurityConfiguration {
                                         .anyRequest().authenticated()
                                         .and().csrf().disable()
                                         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                                        .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService), UsernamePasswordAuthenticationFilter.class);
+                                        .and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService, usuarioRepository), UsernamePasswordAuthenticationFilter.class);
                             } catch (Exception e) {
                                 System.out.println("Authentication Exception");
                             }
