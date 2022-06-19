@@ -17,5 +17,5 @@ This is a simple API built with Spring Boot to simulate how Alura Forum may work
 - Spring Cache
 - Spring Security
 - JWT Authentication
-- Monitoring w/ Spring Actuator
+- Monitoring with Spring Actuator
 - Documentation with OpenAPI and Swagger
