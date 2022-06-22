@@ -44,6 +44,7 @@ public class SecurityConfiguration {
                                         .antMatchers(HttpMethod.GET, "/actuator").permitAll()
                                         .antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
                                         .antMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                                        .antMatchers(HttpMethod.DELETE, TOPICOS_API_URL + "/*").hasRole("MODERADOR")
                                         .anyRequest().authenticated()
                                         .and().csrf().disable()
                                         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
