@@ -4,7 +4,7 @@
 
 This is a simple API built with Spring Boot to simulate how Alura Forum may works in backstage.
 
-## Tecnhologies
+## Tecnhologies I learned
 
 - Java
 - Spring Boot
@@ -19,3 +19,8 @@ This is a simple API built with Spring Boot to simulate how Alura Forum may work
 - JWT Authentication
 - Monitoring with Spring Actuator
 - Documentation with OpenAPI and Swagger
+- Spring Security with Roles
+- Spring Profiles
+- Testing
+- Deploy
+- Deploy on cloud with Docker
