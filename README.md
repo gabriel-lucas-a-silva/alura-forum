@@ -4,6 +4,27 @@
 
 This is a simple API built with Spring Boot to simulate how Alura Forum may works in backstage.
 
+
+## Resources created
+
+You can access these resources by running the project locally as well as by doing HTTP calls to the API on Cloud.
+
+**private static final String _CLOUD_API_URL_** = https://alura-forum-gabriellucas.herokuapp.com/topicos
+
+
+| resource | uri |
+| --- | --- |
+| register topic | /topicos |
+| detail topic | /topicos/{id} |
+| update topic | /topicos/{id} |
+| list topics | /topicos |
+| delete topic | /topicos/{id} |
+| generate student token | /auth |
+| generate moderator token | /auth |
+| actuator | /actuator |
+
+<br>
+  
 ## Tecnhologies I learned
 
 - Java
