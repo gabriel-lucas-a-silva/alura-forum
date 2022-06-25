@@ -22,8 +22,6 @@ You can access these resources by running the project locally as well as by doin
 | generate student token | /auth |
 | generate moderator token | /auth |
 | actuator | /actuator |
-
-<br>
   
 ## Tecnhologies I learned
 
